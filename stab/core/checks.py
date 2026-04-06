@@ -132,8 +132,8 @@ async def check_subdomain(subdomain: str, client: httpx.AsyncClient) -> dict | N
         if result:
             return {**result, "subdomain": subdomain}
 
-    # S3 bucket check — only if CNAME points to amazonaws.com
-    if any("amazonaws.com" in c for c in cnames):
+    # S3 bucket check — only if CNAME points to S3 specifically (not ELB, etc.)
+    if any(".s3." in c or c.endswith(".s3.amazonaws.com") or ".s3-website" in c for c in cnames):
         s3 = await check_s3_bucket(subdomain, client)
         if s3:
             return {**s3, "subdomain": subdomain}
