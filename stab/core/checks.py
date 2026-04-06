@@ -132,10 +132,11 @@ async def check_subdomain(subdomain: str, client: httpx.AsyncClient) -> dict | N
         if result:
             return {**result, "subdomain": subdomain}
 
-    # S3 bucket check
-    s3 = await check_s3_bucket(subdomain, client)
-    if s3:
-        return {**s3, "subdomain": subdomain}
+    # S3 bucket check — only if CNAME points to amazonaws.com
+    if any("amazonaws.com" in c for c in cnames):
+        s3 = await check_s3_bucket(subdomain, client)
+        if s3:
+            return {**s3, "subdomain": subdomain}
 
     # NS takeover check
     ns = await check_ns_takeover(subdomain)
