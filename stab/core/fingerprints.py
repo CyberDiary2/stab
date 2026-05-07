@@ -86,13 +86,13 @@ CNAME_FINGERPRINTS = [
     {
         "service": "Cargo",
         "cname_patterns": ["cargocollective.com"],
-        "http_body": ["404 Not Found"],
+        "http_body": ["if you're moving your domain away from cargo"],
         "http_status": [404],
     },
     {
         "service": "Fly.io",
         "cname_patterns": ["fly.dev"],
-        "http_body": ["404 Not Found"],
+        "http_body": ["404: page not found - fly.io"],
         "http_status": [404],
     },
 ]

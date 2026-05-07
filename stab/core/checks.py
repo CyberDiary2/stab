@@ -71,7 +71,7 @@ async def check_http_fingerprint(subdomain: str, cnames: list[str], client: http
                 body = r.text.lower()
                 status_match = r.status_code in fp["http_status"]
                 body_match = any(sig.lower() in body for sig in fp["http_body"])
-                if status_match or body_match:
+                if body_match:
                     return {
                         "type": "cname_takeover",
                         "service": fp["service"],
